@@ -2,12 +2,16 @@ import React from 'react';
 import './App.css';
 import {BrowserRouter, Route} from 'react-router-dom';
 import Home from './pages/Home'
+import Callback from './pages/Callback'
 
 function App() {
   return  (
-    <BrowserRouter>
-      <Route exact path='/' component={Home}/>
-    </BrowserRouter>
+    <div>
+      <BrowserRouter>
+        <Route exact path='/' component={Home}/>
+        <Route path="/callback" component={Callback} />
+      </BrowserRouter>
+    </div>
   )
 }
 
