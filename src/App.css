@@ -42,10 +42,21 @@
   border: none;
   color: white;
   padding: 15px 32px;
+  margin-top: 50px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
   border-radius: 20px;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  opacity: 0.95;
+  transition: 1s;
+}
+
+.button:hover {
+  transform:scale(1.05,1.05);
+    -webkit-transform:scale(1.05,1.05);
+    -moz-transform:scale(1.05,1.05);
+  opacity: 1;
+  transition: 1s;
 }

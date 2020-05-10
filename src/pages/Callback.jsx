@@ -7,14 +7,17 @@ export class Callback extends Component {
     
     render() {
         return (
-            <div>
+            <div style={lyricStyle} >
                 <SpotifyNP /> 
-
-                {/* <!--<button onClick= { () => SpotifyNP.getNP() } > Click Here </button> */}
-
             </div>
         )
     }
 }
+
+const lyricStyle = { 
+    backgroundColor: '#fff',
+    color: '#000'
+}
+
 
 export default Callback
