@@ -51,6 +51,7 @@
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   opacity: 0.95;
   transition: 1s;
+  outline: 0 none;
 }
 
 .button:hover {
@@ -59,4 +60,14 @@
     -moz-transform:scale(1.05,1.05);
   opacity: 1;
   transition: 1s;
+  outline: 0 none;
+}
+
+p {
+    display: block; /* or inline-block, at least its a block element */
+    height: auto; /* height cannot be defined */
+    word-break: break-all; /*  */
+    word-wrap: break-word; /* if you want to cut the complete word */
+    white-space: pre-wrap;
+    
 }

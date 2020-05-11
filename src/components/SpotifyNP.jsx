@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 import axios from 'axios';
 const spotifyAPI = new SpotifyWebApi();
-const token = 'GEnP2daAGfM5O3Y6keB8o6o5XRuTSKsBO4vTlhQvJtpxwBkX0xD1fS4c4lNkehb1';
+const atoken = 'GEnP2daAGfM5O3Y6keB8o6o5XRuTSKsBO4vTlhQvJtpxwBkX0xD1fS4c4lNkehb1';
 const api = 'https://orion.apiseeds.com/api/music/lyric/';
 
 export class SpotifyNP extends Component {
@@ -11,17 +11,27 @@ export class SpotifyNP extends Component {
     constructor(){
         super();
         const params = this.getHashParams();
-        const token = params.access_token;
-        console.log(params);
+        var token = params.access_token;
+        var rtoken = params.refresh_token;
+        //var expires = params.expires_in;
+        
+        console.log(token);
+        console.log(rtoken);
+        //console.log(expires);
 
         if (token) { 
             spotifyAPI.setAccessToken(token);
         }
+        else { 
+            
+        }
+        
+
         this.state = {
             loggedIn: token ? true : false,
             nowPlaying: { artist: 'None', title: 'None Playing', albumArt: '', lyrics: '' }
           }
-    
+          
     }
 
     getHashParams() {
@@ -39,6 +49,10 @@ export class SpotifyNP extends Component {
         return hashParams;
     }
 
+    newAccessTok = () => {
+        
+    }
+
     getNP() { 
         spotifyAPI.getMyCurrentPlaybackState()
             .then((resp) =>  { 
@@ -51,35 +65,53 @@ export class SpotifyNP extends Component {
     getSongJSON(artist, title) {
 
         if(artist !== 'None' || artist !== undefined){
-            var call = api + artist + '/' + title + '?apikey=' + token;
+            var call = api + artist + '/' + title + '?apikey=' + atoken;
+
+            var artist = this.state.nowPlaying.artist;
+            var title = this.state.nowPlaying.title;
+            var albumArt = this.state.nowPlaying.albumArt;
+            
             
             axios.get(call)
                 .then(resp => {
                     var lyr = resp.data.result.track.text;
-                    if(lyr !== undefined)
-                        this.setState({ nowPlaying: {lyrics: lyr} } ) ; 
-                });
+                    lyr = lyr.replace(/\n/g, "\n");
+                    this.setState({ nowPlaying: {artist, title, albumArt, lyrics: lyr} }) ; 
+                })
+                .catch (error => {
+                    console.log('error happened');
+                })
             //console.log(this.state.nowPlaying.lyrics);
         }
     }
 
-    setNP(){
-        this.getNP();
-    }
 
     setLyrics(){
         if(this.state.nowPlaying.artist !== 'None'){
             this.getSongJSON(this.state.nowPlaying.artist, this.state.nowPlaying.title); 
-            console.log(this.state.nowPlaying.lyrics);
         }
+
+
+    }
+
+    toggleBtnState = () => {
+        this.getNP();
+
+        this.setLyrics();   
+    }
+
+    retLyrics(){
+        if (this.state.nowPlaying.lyrics == '' && this.state.nowPlaying.artist !== 'None')
+            return "Can't find the lyrics for this song :(";
+        else
+            return this.state.nowPlaying.lyrics; 
     }
 
 
     render() {
         return (
             <div style={getStyle}>
-                <button className="button" onClick={() => 
-                {this.setNP(); this.setLyrics() } }>
+                <button className="button" onClick= {this.toggleBtnState } >
                     UPDATE LYRICS
                 </button>
                 <h1>Now Playing: {this.state.nowPlaying.title} </h1>
@@ -88,14 +120,11 @@ export class SpotifyNP extends Component {
 
 
                 <img src={this.state.nowPlaying.albumArt} alt='' style={albumStyle}  />
+                <div>{console.log(this.state.nowPlaying)} </div>
+                <div></div>
+                <h3 style={lyricsStyle}> {this.retLyrics()} </h3>
 
-                <p style={lyricsStyle} >{this.state.nowPlaying.lyrics}</p>
-
-                <div>
-                
-                
-                        
-                </div>
+                {/* <p>  {this.retLyrics()} </p> */}
             </div>
         )
     }
@@ -108,7 +137,9 @@ const albumStyle = {
 
 const lyricsStyle = { 
     marginTop: '20px',
-    textAlign:'center'
+    textAlign:'center',
+    fontWeight: 'normal',
+    whiteSpace: 'pre-wrap'
 }
 
 
