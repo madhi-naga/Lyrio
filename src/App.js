@@ -9,7 +9,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Route exact path='/' component={Home}/>
-        <Route path="/callback" component={Callback} />
+        <Route path="/lyrics" component={Callback} />
       </BrowserRouter>
     </div>
   )

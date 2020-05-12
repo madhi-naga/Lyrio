@@ -8,7 +8,7 @@ export class Home extends Component {
             <div style={homeStyle}>
                 <h1>Welcome to Lyrio</h1>
                 <h3>Login with Spotify to get started</h3>
-                <a className="button" href="http://localhost:8888/" > GET STARTED </a>
+                <a className="button" href="http://localhost:8888/login" > LOGIN </a>
             </div>
         )
     }

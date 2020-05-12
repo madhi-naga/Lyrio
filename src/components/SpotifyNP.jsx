@@ -7,36 +7,45 @@ const api = 'https://orion.apiseeds.com/api/music/lyric/';
 
 export class SpotifyNP extends Component {
 
-    
     constructor(){
         super();
-        const params = this.getHashParams();
-        var token = params.access_token;
-        var rtoken = params.refresh_token;
-        //var expires = params.expires_in;
-        
-        console.log(token);
-        console.log(rtoken);
-        //console.log(expires);
-
-        if (token) { 
-            spotifyAPI.setAccessToken(token);
-        }
-        else { 
-            
-        }
-        
 
         this.state = {
-            loggedIn: token ? true : false,
+            loggedIn: false,
+            userData: '',
             nowPlaying: { artist: 'None', title: 'None Playing', albumArt: '', lyrics: '' }
           }
           
     }
 
+    componentDidMount() { 
+        const params = this.getHashParams();
+        let token = params.access_token;
+        let rtoken = params.refresh_token;
+        let error = params.error;
+
+        if (token && rtoken) { 
+            spotifyAPI.setAccessToken(token);
+
+            axios.get('https://api.spotify.com/v1/me', { 
+                headers: { 'Authorization': 'Bearer ' + token }
+            })
+            .then(resp => this.setState( prevState => ({ 
+                loggedIn: true,
+                userData: resp.data,
+                nowPlaying: prevState.nowPlaying 
+            })))
+
+        }
+        else {
+            console.log(error);
+        }
+    }
+
+    //receives hash of url (for tokens)
     getHashParams() {
-        var hashParams = {};
-        var e, r = /([^&;=]+)=?([^&;]*)/g,
+        let hashParams = {};
+        let e, r = /([^&;=]+)=?([^&;]*)/g,
             q = window.location.hash.substring(1);
         
         e = r.exec(q)
@@ -45,43 +54,40 @@ export class SpotifyNP extends Component {
            hashParams[e[1]] = decodeURIComponent(e[2]);
            e = r.exec(q);
         }
-
         return hashParams;
-    }
-
-    newAccessTok = () => {
-        
     }
 
     getNP() { 
         spotifyAPI.getMyCurrentPlaybackState()
             .then((resp) =>  { 
-                this.setState( {
+                this.setState( prevState => ({ 
+                    loggedIn: prevState.loggedIn,
+                    userData: prevState.userData,
                     nowPlaying: {artist: resp.item.artists[0].name ,title: resp.item.name, albumArt: resp.item.album.images[0].url, lyrics:'' }
-                })       
+                }))       
             })
+            .catch(error => { console.log(error)});
     }
 
     getSongJSON(artist, title) {
 
         if(artist !== 'None' || artist !== undefined){
-            var call = api + artist + '/' + title + '?apikey=' + atoken;
-
-            var artist = this.state.nowPlaying.artist;
-            var title = this.state.nowPlaying.title;
-            var albumArt = this.state.nowPlaying.albumArt;
-            
-            
+            let call = api + artist + '/' + title + '?apikey=' + atoken;
+          
             axios.get(call)
                 .then(resp => {
-                    var lyr = resp.data.result.track.text;
+                    let lyr = resp.data.result.track.text;
                     lyr = lyr.replace(/\n/g, "\n");
-                    this.setState({ nowPlaying: {artist, title, albumArt, lyrics: lyr} }) ; 
+                    this.setState( prevState => ({
+                        loggedIn: prevState.loggedIn,
+                        userData: prevState.userData,
+                        nowPlaying: {...prevState.nowPlaying, lyrics: lyr} 
+                    })) 
                 })
                 .catch (error => {
-                    console.log('error happened');
-                })
-            //console.log(this.state.nowPlaying.lyrics);
+                    console.log(error);
+                });
+            console.log(this.state);
         }
     }
 
@@ -90,8 +96,6 @@ export class SpotifyNP extends Component {
         if(this.state.nowPlaying.artist !== 'None'){
             this.getSongJSON(this.state.nowPlaying.artist, this.state.nowPlaying.title); 
         }
-
-
     }
 
     toggleBtnState = () => {
@@ -101,12 +105,11 @@ export class SpotifyNP extends Component {
     }
 
     retLyrics(){
-        if (this.state.nowPlaying.lyrics == '' && this.state.nowPlaying.artist !== 'None')
+        if (this.state.nowPlaying.lyrics === '' && this.state.nowPlaying.artist !== 'None')
             return "Can't find the lyrics for this song :(";
         else
             return this.state.nowPlaying.lyrics; 
     }
-
 
     render() {
         return (
@@ -120,11 +123,9 @@ export class SpotifyNP extends Component {
 
 
                 <img src={this.state.nowPlaying.albumArt} alt='' style={albumStyle}  />
-                <div>{console.log(this.state.nowPlaying)} </div>
-                <div></div>
+
                 <h3 style={lyricsStyle}> {this.retLyrics()} </h3>
 
-                {/* <p>  {this.retLyrics()} </p> */}
             </div>
         )
     }
