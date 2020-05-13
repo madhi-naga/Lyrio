@@ -19,11 +19,4 @@ const homeStyle = {
     textAlign:'center'
 }
 
-const btnStyle = { 
-    backgroundColor: '#fff',
-    color:'#000',
-    textAlign:'center'
-}
-
-
 export default Home
