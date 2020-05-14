@@ -7,8 +7,9 @@ var cookieParser = require('cookie-parser');
 
 var client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
 var client_secret = process.env.SPOTIFY_CLIENT_SC; // Your secret
-var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
-var redirect_frontend = 'http://localhost:3000/lyrics';
+var port = process.env.PORT || 'http://localhost:8888/';
+var redirect_uri = process.env.REDIRECT_URI || 'http://localhost:8888/callback/'; // Your redirect uri
+var redirect_frontend = process.env.PORT_FE || 'http://localhost:3000/lyrics';
 
 
 /**
@@ -137,5 +138,5 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-console.log('Listening on 8888');
-app.listen(8888);
+console.log(`Listening on ${port}`);
+app.listen(port);
