@@ -60,7 +60,7 @@ export class SpotifyInfo extends Component {
     getNP() { 
         spotifyAPI.getMyCurrentPlaybackState()
             .then((resp) => { 
-                console.log(resp);
+                
                 if(resp.item !== undefined){
                     this.setState( prevState => ({ 
                         loggedIn: prevState.loggedIn,

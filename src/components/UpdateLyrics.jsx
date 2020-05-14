@@ -1,9 +1,11 @@
+
 import React, { Component } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-const atoken = 'GEnP2daAGfM5O3Y6keB8o6o5XRuTSKsBO4vTlhQvJtpxwBkX0xD1fS4c4lNkehb1';
-const api = 'https://orion.apiseeds.com/api/music/lyric/';
 
+require('dotenv').config();
+const atoken = `${process.env.REACT_APP_APISEEDS_ID}`;
+const api = 'https://orion.apiseeds.com/api/music/lyric/';
 
 export class UpdateLyrics extends Component {
 
@@ -38,7 +40,6 @@ export class UpdateLyrics extends Component {
                         lyrics: '' 
                     })) 
                 });
-            console.log(this.state);
         }
     }
 
