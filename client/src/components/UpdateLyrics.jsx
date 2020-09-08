@@ -7,6 +7,7 @@ require('dotenv').config();
 const atoken = `${process.env.REACT_APP_APISEEDS_ID}`;
 const api = 'https://orion.apiseeds.com/api/music/lyric/';
 
+
 export class UpdateLyrics extends Component {
 
     state = { 
@@ -22,7 +23,7 @@ export class UpdateLyrics extends Component {
 
         if(title !== this.state.title && prevState.lyrics === ''){
             let call = api + artist + '/' + title + '?apikey=' + atoken;
-          
+
             axios.get(call)
                 .then(resp => {
                     let lyr = resp.data.result.track.text;
