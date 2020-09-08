@@ -13,8 +13,9 @@ export class Lyrics extends Component {
 }
 
 const lyricStyle = { 
-    backgroundColor: '#fff',
-    color: '#000'
+    backgroundColor: '#141414',
+    color: '#fff',
+    minHeight: '100vh',
 }
 
 

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 import axios from 'axios';
-import { NowPlaying } from './NowPlaying.jsx'
-import { UpdateLyrics } from './UpdateLyrics.jsx'
+import '../App.css';
+import { NowPlaying } from './NowPlaying.jsx';
+import { UpdateLyrics } from './UpdateLyrics.jsx';
 const spotifyAPI = new SpotifyWebApi();
 
 export class SpotifyInfo extends Component {
