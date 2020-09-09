@@ -67,7 +67,8 @@ const lyricsStyle = {
     marginTop: '20px',
     textAlign:'center',
     fontWeight: 'normal',
-    whiteSpace: 'pre-wrap'
+    whiteSpace: 'pre-wrap',
+    marginBottom: '50px'
 }
 
 UpdateLyrics.propTypes = { 

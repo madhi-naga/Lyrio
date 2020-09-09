@@ -16,6 +16,7 @@ const lyricStyle = {
     backgroundColor: '#141414',
     color: '#fff',
     minHeight: '100vh',
+    overflow:'auto',
 }
 
 
