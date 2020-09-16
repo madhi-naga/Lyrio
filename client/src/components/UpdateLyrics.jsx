@@ -16,7 +16,7 @@ export class UpdateLyrics extends Component {
         lyrics: this.props.lyrics
     }
 
-    componentDidUpdate(prevState) {
+    componentDidUpdate(prevState, prevProps) {
 
         let artist = prevState.artist;
         let title = prevState.title;
@@ -45,7 +45,7 @@ export class UpdateLyrics extends Component {
     }
 
     retLyrics(){
-        console.log(this.state);
+       // console.log(this.state);
     
         if (this.state.lyrics === '' && this.state.artist !== 'None')
             return "Can't find the lyrics for this song :(";

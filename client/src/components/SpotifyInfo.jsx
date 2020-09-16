@@ -63,11 +63,18 @@ export class SpotifyInfo extends Component {
             .then((resp) => { 
                 
                 if(resp.item !== undefined){
-                    this.setState( prevState => ({ 
-                        loggedIn: prevState.loggedIn,
-                        userData: prevState.userData,
-                        nowPlaying: {artist: resp.item.artists[0].name ,title: resp.item.name, albumArt: resp.item.album.images[0].url, lyrics:'' }
-                    }))       
+                    this.setState( (state) => {
+                        return { 
+                            loggedIn: state.loggedIn,
+                            userData: state.userData,
+                            nowPlaying: {
+                                artist: resp.item.artists[0].name,
+                                title: resp.item.name, 
+                                albumArt: resp.item.album.images[0].url, 
+                                lyrics:'' 
+                            }
+                        }
+                    })       
                 }
             })
             .catch(error => { console.log(error)});
