@@ -5,4 +5,4 @@ Project can be found [here](https://lyrio.herokuapp.com/)
 
 Preview: 
 
-![Lyrics](https://madhi-naga.github.io/assets/img/portfolio/lyrio.JPG)
+![Lyrics](https://madhi-naga.github.io/assets/img/portfolio/lyrio.png)
