@@ -87,7 +87,7 @@ export class SpotifyInfo extends Component {
 
     render() {
         return (
-            <div id='lyrics' style={getStyle}>
+            <div class='lyrics-box' style={getStyle}>
                 <button className="button" onClick= {this.toggleBtnState} >
                     UPDATE LYRICS
                 </button>

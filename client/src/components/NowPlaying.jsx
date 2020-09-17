@@ -5,7 +5,7 @@ export class NowPlaying extends Component {
     
     render() {
         return (
-            <div id="nowPlaying">
+            <div>
                 <h1>Now Playing: {this.props.nowPlaying.title} </h1>
                 <h1>By {this.props.nowPlaying.artist} </h1>
                 <img src={this.props.nowPlaying.albumArt} alt='' style={albumStyle}  />

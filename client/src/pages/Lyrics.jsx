@@ -5,7 +5,7 @@ export class Lyrics extends Component {
 
     render() {
         return (
-            <div style={lyricStyle} >
+            <div class="lyrics-bkg" >
                 <SpotifyInfo /> 
             </div>
         )
@@ -13,8 +13,8 @@ export class Lyrics extends Component {
 }
 
 const lyricStyle = { 
-    backgroundColor: '#141414',
-    color: '#fff',
+    //backgroundColor: '#141414',
+    //color: '#fff',
     minHeight: '100vh',
     overflow:'auto',
 }

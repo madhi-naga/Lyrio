@@ -56,7 +56,7 @@ export class UpdateLyrics extends Component {
 
     render() {
         return (
-            <div>
+            <div className={this.retLyrics() ? 'lyrics-box2' : 'lyrics-hidden'}>
                 <h3 style={lyricsStyle}> {this.retLyrics()} </h3>
             </div>
         )
